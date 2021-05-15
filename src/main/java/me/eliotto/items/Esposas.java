@@ -12,9 +12,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Esposa extends ItemStack {
+public class Esposas extends ItemStack {
 
-    public Esposa(){
+
+    public Esposas(){
         super(Material.CHAIN);
 
         ItemMeta meta = this.getItemMeta();

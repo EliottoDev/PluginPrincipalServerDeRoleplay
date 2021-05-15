@@ -1,6 +1,7 @@
 package me.eliotto;
 
 import me.eliotto.eventos.policia.Arrestar;
+import me.eliotto.items.Esposas;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
@@ -15,12 +16,17 @@ public class Main extends JavaPlugin {
 
         Bukkit.getConsoleSender().sendMessage(PREFIJO_NOMBRE+ChatColor.GREEN+" El plugin ha sido iniciado correctamente");
         registerEvents();
+        registerRecipes();
     }
 
     public void onDisable() {
 
         Bukkit.getConsoleSender().sendMessage(PREFIJO_NOMBRE+ChatColor.GREEN+" El plugin ha sido cerrado correctamente");
 
+    }
+
+    public void registerRecipes(){
+        new Esposas().getRecipe();
     }
 
 
