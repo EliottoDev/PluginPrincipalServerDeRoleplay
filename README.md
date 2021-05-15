@@ -1,3 +1,12 @@
-# Plugin Server De Roleplay
+# Server De Roleplay
 
-no hay info por depresion ;-;
+## Indice
+***
+- Comandos
+- Funcionalidades
+- Roles
+
+## Comandos
+***
+
+- /enciclopedia - Muestra un libro con toda la info del server
