@@ -1,6 +1,6 @@
 package me.eliotto;
 
-import me.eliotto.eventos.general.Entrar;
+import me.eliotto.eventos.general.EntrarYSalir;
 import me.eliotto.eventos.policia.Arrestar;
 import me.eliotto.items.Esposas;
 import org.bukkit.Bukkit;
@@ -47,7 +47,7 @@ public class Main extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
 
         pm.registerEvents(new Arrestar(this), this);
-        pm.registerEvents(new Entrar(this), this);
+        pm.registerEvents(new EntrarYSalir(this), this);
 
     }
 }
