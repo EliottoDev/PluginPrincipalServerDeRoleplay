@@ -46,4 +46,8 @@ public class Esposas extends ItemStack {
 
         return recipe;
     }
+
+    public ItemStack get(){
+        return this;
+    }
 }
