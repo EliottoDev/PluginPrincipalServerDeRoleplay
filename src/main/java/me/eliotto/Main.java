@@ -17,6 +17,7 @@ public class Main extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(PREFIJO_NOMBRE+ChatColor.GREEN+" El plugin ha sido iniciado correctamente");
         registerEvents();
         registerRecipes();
+
     }
 
     public void onDisable() {
@@ -26,7 +27,7 @@ public class Main extends JavaPlugin {
     }
 
     public void registerRecipes(){
-        new Esposas().getRecipe();
+        Bukkit.addRecipe(new Esposas().getRecipe());
     }
 
 
