@@ -1,4 +1,4 @@
-package me.eliotto.items;
+package me.eliotto.items.policia;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

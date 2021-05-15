@@ -2,7 +2,7 @@ package me.eliotto;
 
 import me.eliotto.eventos.general.EntrarYSalir;
 import me.eliotto.eventos.policia.Arrestar;
-import me.eliotto.items.Esposas;
+import me.eliotto.items.policia.Esposas;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
