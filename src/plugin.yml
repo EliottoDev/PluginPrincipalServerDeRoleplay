@@ -1,0 +1,8 @@
+name: Plugin Para Server De Roleplay
+main: main.java.me.eliotto.Main
+version: 0.1
+author: Eliot
+commands:
+  enciclopedia:
+    description: Abre un libro con toda la informacion del plugin
+    usage: /enciclopedia

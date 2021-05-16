@@ -13,11 +13,15 @@ public class M4 extends ItemStack {
 
         ItemMeta meta = this.getItemMeta();
 
-        meta.setCustomModelData();
+        meta.setCustomModelData(982453);
+
+
 
     }
 
     public ShapedRecipe getRecipe(){
+
+        ShapedRecipe recipe = new ShapedRecipe(this);
 
         return recipe;
     }

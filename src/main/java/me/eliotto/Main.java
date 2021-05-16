@@ -1,5 +1,6 @@
 package me.eliotto;
 
+import me.eliotto.comandos.Enciclopedia;
 import me.eliotto.eventos.general.EntrarYSalir;
 import me.eliotto.eventos.policia.Arrestar;
 import me.eliotto.items.policia.Esposas;
@@ -26,6 +27,7 @@ public class Main extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(PREFIJO_NOMBRE+ChatColor.GREEN+" El plugin ha sido iniciado correctamente");
 
         registerEvents();
+        registerCommands();
         registerRecipes();
 
     }
@@ -33,7 +35,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
 
-        Bukkit.getConsoleSender().sendMessage(PREFIJO_NOMBRE+ChatColor.GREEN+" El plugin ha sido cerrado correctamente");
+        Bukkit.getConsoleSender().sendMessage(PREFIJO_NOMBRE+ChatColor.RED+" El plugin ha sido cerrado correctamente");
 
     }
 
@@ -48,6 +50,12 @@ public class Main extends JavaPlugin {
 
         pm.registerEvents(new Arrestar(this), this);
         pm.registerEvents(new EntrarYSalir(this), this);
+
+    }
+
+    public void registerCommands(){
+
+        this.getCommand("enciclopedia").setExecutor(new Enciclopedia());
 
     }
 }

@@ -1,1 +1,3 @@
 CustomDataModels:
+    - M4:       982453
+    - Taser:    528349
