@@ -1,6 +1,8 @@
 package me.eliotto.items.policia;
 
+import me.eliotto.Main;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -20,9 +22,9 @@ public class Taser extends ItemStack {
     }
 
 
-    public ShapedRecipe getRecipe(){
+    public ShapedRecipe getRecipe(Main plugin){
 
-        ShapedRecipe recipe = new ShapedRecipe(this);
+        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(plugin, ""), this);
 
 
         return recipe;

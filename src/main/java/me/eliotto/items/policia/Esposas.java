@@ -1,5 +1,6 @@
 package me.eliotto.items.policia;
 
+import me.eliotto.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -32,9 +33,9 @@ public class Esposas extends ItemStack {
         this.setItemMeta(meta);
     }
 
-    public ShapedRecipe getRecipe(){
+    public ShapedRecipe getRecipe(Main plugin){
 
-        ShapedRecipe recipe = new ShapedRecipe(this);
+        ShapedRecipe recipe = new ShapedRecipe(new NamespacedKey(plugin, ""), this);
 
         recipe.shape(   "IIP",
                         "ICP",

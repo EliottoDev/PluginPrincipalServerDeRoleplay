@@ -23,6 +23,7 @@ public class EntrarYSalir implements Listener {
 
         Player player = event.getPlayer();
 
+        player.setTexturePack("");
         event.setJoinMessage(ChatColor.GOLD+"["+ChatColor.GREEN+"+"+ChatColor.GOLD+"] "+player.getCustomName()+" se ha unido a la partida!!");
 
 

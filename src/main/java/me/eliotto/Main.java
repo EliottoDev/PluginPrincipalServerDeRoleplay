@@ -3,7 +3,11 @@ package me.eliotto;
 import me.eliotto.comandos.Enciclopedia;
 import me.eliotto.eventos.general.EntrarYSalir;
 import me.eliotto.eventos.policia.Arrestar;
+import me.eliotto.items.demonslayer.Katana;
+import me.eliotto.items.general.IronTemplado;
+import me.eliotto.items.militar.M4;
 import me.eliotto.items.policia.Esposas;
+import me.eliotto.items.policia.Taser;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -40,7 +44,11 @@ public class Main extends JavaPlugin {
     }
 
     public void registerRecipes(){
-        Bukkit.addRecipe(new Esposas().getRecipe());
+        Bukkit.addRecipe(new Esposas().getRecipe(this));
+        Bukkit.addRecipe(new M4().getRecipe(this));
+        Bukkit.addRecipe(new Taser().getRecipe(this));
+        Bukkit.addRecipe(new Katana().getRecipe(this));
+        Bukkit.addRecipe(new IronTemplado().getRecipe(this));
     }
 
 
