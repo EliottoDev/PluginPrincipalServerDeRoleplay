@@ -1,6 +1,7 @@
 package me.eliotto;
 
 import me.eliotto.comandos.Enciclopedia;
+import me.eliotto.comandos.Imagen;
 import me.eliotto.eventos.general.EntrarYSalir;
 import me.eliotto.eventos.policia.Arrestar;
 import me.eliotto.items.demonslayer.Katana;
@@ -64,6 +65,6 @@ public class Main extends JavaPlugin {
     public void registerCommands(){
 
         this.getCommand("enciclopedia").setExecutor(new Enciclopedia());
-
+        this.getCommand("imagen").setExecutor(new Imagen());
     }
 }
