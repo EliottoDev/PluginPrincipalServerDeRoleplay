@@ -31,6 +31,8 @@ public class Main extends JavaPlugin {
 
         Bukkit.getConsoleSender().sendMessage(PREFIJO_NOMBRE+ChatColor.GREEN+" El plugin ha sido iniciado correctamente");
 
+        
+
         registerEvents();
         registerCommands();
         registerRecipes();

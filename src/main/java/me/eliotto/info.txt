@@ -1,3 +1,8 @@
 CustomDataModels:
+
     - M4:       982453
     - Taser:    528349
+    - Escopeta: 672385
+
+
+URL: ""
