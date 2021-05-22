@@ -15,14 +15,12 @@ public class Bot implements Runnable{
 
     private final String TOKEN;
     private final Json json;
-    private final String ip;
     private final Logger log;
     private final Main plugin;
 
     public Bot(Json json, Logger log, Main main) throws IOException, ParseException {
         TOKEN = (String) json.getConfig().get("token");
         this.json = json;
-        this.ip = json.getServerIP();
         this.log = log;
         this.plugin = main;
     }

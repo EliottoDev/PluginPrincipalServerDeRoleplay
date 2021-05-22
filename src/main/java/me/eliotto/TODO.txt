@@ -1,0 +1,6 @@
+Compatibilizar las skins entre bedrock y java
+Probar si las texturas funcionan en ambas versiones
+Terminar el plugin
+Poner roles
+Poner permisos
+Probar si hay algun bug
