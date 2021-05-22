@@ -30,4 +30,8 @@ public class Json {
     public JSONObject getItems() throws IOException, ParseException, FileNotFoundException {
         return (JSONObject) parser.parse(new FileReader(CONFIG_PATH));
     }
+
+    public String getServerIP(){
+        return "ª";
+    }
 }

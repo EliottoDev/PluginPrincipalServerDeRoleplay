@@ -1,5 +1,7 @@
 package me.eliotto;
 
+import me.eliotto.botds.Bot;
+import me.eliotto.botds.data.Json;
 import me.eliotto.comandos.Enciclopedia;
 import me.eliotto.comandos.Imagen;
 import me.eliotto.eventos.general.EntrarYSalir;
@@ -14,6 +16,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 
 public class Main extends JavaPlugin {
 
@@ -21,8 +26,14 @@ public class Main extends JavaPlugin {
     String PREFIJO_NOMBRE = ChatColor.GRAY+"["+ChatColor.BLUE+getName()+ChatColor.GRAY+"]";
     FileConfiguration config;
 
+
+    private Thread bot;
+
     {
         config = getConfig();
+    }
+
+    public Main() {
     }
 
 
@@ -31,7 +42,12 @@ public class Main extends JavaPlugin {
 
         Bukkit.getConsoleSender().sendMessage(PREFIJO_NOMBRE+ChatColor.GREEN+" El plugin ha sido iniciado correctamente");
 
-        
+        try {
+            this.bot = new Thread(new Bot(new Json()));
+            this.bot.start();
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
 
         registerEvents();
         registerCommands();
@@ -43,6 +59,8 @@ public class Main extends JavaPlugin {
     public void onDisable() {
 
         Bukkit.getConsoleSender().sendMessage(PREFIJO_NOMBRE+ChatColor.RED+" El plugin ha sido cerrado correctamente");
+
+        this.bot.interrupt();
 
     }
 
@@ -66,7 +84,7 @@ public class Main extends JavaPlugin {
 
     public void registerCommands(){
 
-        this.getCommand("enciclopedia").setExecutor(new Enciclopedia());
+        getCommand("enciclopedia").setExecutor(new Enciclopedia());
         this.getCommand("imagen").setExecutor(new Imagen());
     }
 }

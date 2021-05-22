@@ -12,12 +12,12 @@ public class Bot implements Runnable{
 
     private final String TOKEN;
     private final Json json;
+    private final String ip;
 
     public Bot(Json json) throws IOException, ParseException {
-
         TOKEN = (String) json.getConfig().get("token");
         this.json = json;
-
+        this.ip = json.getServerIP();
     }
 
     @Override
