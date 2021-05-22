@@ -12,7 +12,7 @@ public class Enciclopedia implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(!(sender instanceof Player))
-            return false;
+            return true;
 
         Player player = (Player) sender;
 
@@ -22,6 +22,4 @@ public class Enciclopedia implements CommandExecutor {
 
         return true;
     }
-
-
 }

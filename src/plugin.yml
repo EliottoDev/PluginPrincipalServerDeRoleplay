@@ -2,6 +2,7 @@ name: TGMCraft
 main: main.java.me.eliotto.Main
 version: 0.1
 author: Eliot
+api-version: 1.13
 depend:
   - Vault
 commands:

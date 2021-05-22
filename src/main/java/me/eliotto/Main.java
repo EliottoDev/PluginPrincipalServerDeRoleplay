@@ -11,16 +11,18 @@ import me.eliotto.items.general.IronTemplado;
 import me.eliotto.items.militar.M4;
 import me.eliotto.items.policia.Esposas;
 import me.eliotto.items.policia.Taser;
-import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -28,10 +30,15 @@ public class Main extends JavaPlugin {
 
 
     public String PREFIJO_NOMBRE = ChatColor.GRAY+"["+ChatColor.BLUE+getName()+ChatColor.GRAY+"]";
-    FileConfiguration config;
+    public FileConfiguration config;
     private static final Logger log = Logger.getLogger("Minecraft");
     private static Economy econ = null;
 
+    public FileConfiguration getRoles() {
+        return roles;
+    }
+
+    private FileConfiguration roles;
 
     private Thread bot;
 
@@ -58,6 +65,8 @@ public class Main extends JavaPlugin {
         }else{
             log.info(ChatColor.translateAlternateColorCodes('&', PREFIJO_NOMBRE+" &aVault encontrado correctamente, plugin iniciado con exito!!"));
         }
+
+        this.roles = createConfig("roles.yml");
 
         registerEvents();
         registerCommands();
@@ -108,6 +117,29 @@ public class Main extends JavaPlugin {
 
         getCommand("enciclopedia").setExecutor(new Enciclopedia());
         getCommand("imagen").setExecutor(new Imagen());
+    }
+
+
+    public FileConfiguration createConfig(String file) {
+        File customConfigFile = new File(getDataFolder(), file);
+        boolean error = false;
+        if (!customConfigFile.exists()) {
+            customConfigFile.getParentFile().mkdirs();
+            saveResource("custom.yml", false);
+        }
+
+        FileConfiguration customConfig = new YamlConfiguration();
+        try {
+            customConfig.load(customConfigFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            e.printStackTrace();
+            error = true;
+        }
+
+        if(!error)
+            return customConfig;
+        else
+            return null;
     }
 
     public static Economy getEconomy() {

@@ -52,7 +52,6 @@
             <version>3.0</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.destroystokyo.paper</groupId>
             <artifactId>paper-api</artifactId>
