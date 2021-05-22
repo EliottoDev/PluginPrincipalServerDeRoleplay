@@ -11,20 +11,26 @@ import me.eliotto.items.general.IronTemplado;
 import me.eliotto.items.militar.M4;
 import me.eliotto.items.policia.Esposas;
 import me.eliotto.items.policia.Taser;
+import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class Main extends JavaPlugin {
 
 
-    String PREFIJO_NOMBRE = ChatColor.GRAY+"["+ChatColor.BLUE+getName()+ChatColor.GRAY+"]";
+    public String PREFIJO_NOMBRE = ChatColor.GRAY+"["+ChatColor.BLUE+getName()+ChatColor.GRAY+"]";
     FileConfiguration config;
+    private static final Logger log = Logger.getLogger("Minecraft");
+    private static Economy econ = null;
 
 
     private Thread bot;
@@ -33,20 +39,24 @@ public class Main extends JavaPlugin {
         config = getConfig();
     }
 
-    public Main() {
-    }
-
 
     @Override
     public void onEnable() {
 
-        Bukkit.getConsoleSender().sendMessage(PREFIJO_NOMBRE+ChatColor.GREEN+" El plugin ha sido iniciado correctamente");
+        log.info(ChatColor.translateAlternateColorCodes('&', PREFIJO_NOMBRE+" &aIniciado plugin"));
 
         try {
-            this.bot = new Thread(new Bot(new Json()));
+            this.bot = new Thread(new Bot(new Json(), log, this));
             this.bot.start();
         } catch (IOException | ParseException e) {
             e.printStackTrace();
+        }
+        if (!setupEconomy() ) {
+            log.severe(ChatColor.translateAlternateColorCodes('&', PREFIJO_NOMBRE+" &cVault no encontrado, plugin no iniciado"));
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }else{
+            log.info(ChatColor.translateAlternateColorCodes('&', PREFIJO_NOMBRE+" &aVault encontrado correctamente, plugin iniciado con exito!!"));
         }
 
         registerEvents();
@@ -82,9 +92,25 @@ public class Main extends JavaPlugin {
 
     }
 
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
+    }
+
     public void registerCommands(){
 
         getCommand("enciclopedia").setExecutor(new Enciclopedia());
-        this.getCommand("imagen").setExecutor(new Imagen());
+        getCommand("imagen").setExecutor(new Imagen());
+    }
+
+    public static Economy getEconomy() {
+        return econ;
     }
 }

@@ -1,7 +1,9 @@
-name: Plugin Para Server De Roleplay
+name: TGMCraft
 main: main.java.me.eliotto.Main
 version: 0.1
 author: Eliot
+depend:
+  - Vault
 commands:
   enciclopedia:
     description: Abre un libro con toda la informacion del plugin
