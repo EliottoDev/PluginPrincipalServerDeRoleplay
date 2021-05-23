@@ -125,9 +125,11 @@ public class ArrestarComando implements CommandExecutor {
     @EventHandler
     public void onClick(InventoryClickEvent event){
 
-        event.setCancelled(true);
+
 
         if(event.getInventory() == this.prioridades){
+
+            event.setCancelled(true);
 
             if(event.getCurrentItem().getClass() == Skip.class)
                return;
@@ -195,7 +197,9 @@ public class ArrestarComando implements CommandExecutor {
         
         
         if(event.getInventory() == this.tiempo){
-            
+
+            event.setCancelled(true);
+
             if(event.getCurrentItem().getClass() == Skip.class)
                 return;
             

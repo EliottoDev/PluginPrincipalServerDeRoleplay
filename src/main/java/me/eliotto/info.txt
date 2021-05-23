@@ -1,8 +1,9 @@
 CustomDataModels:
 
-    - M4        :       982453
-    - Taser     :       528349
-    - Escopeta  :       672385
+    - M4        :       9824531
+    - Taser     :       5283491
+    - Escopeta  :       6723851
+    - Katana    :       3274871
 
 
 URL: ""
