@@ -43,8 +43,8 @@ public class Main extends JavaPlugin {
         return configs;
     }
 
-    private String PREFIJO_NOMBRE = ChatColor.GRAY+"["+ChatColor.BLUE+getName()+ChatColor.GRAY+"]";
-    private FileConfiguration config;
+    private final String PREFIJO_NOMBRE = ChatColor.GRAY+"["+ChatColor.BLUE+getName()+ChatColor.GRAY+"]";
+    private final FileConfiguration config;
     private static final Logger log = Logger.getLogger("Minecraft");
     private static Economy econ = null;
     private HashMap<String, FileConfiguration> configs;
@@ -64,17 +64,28 @@ public class Main extends JavaPlugin {
     }
 
 
+    boolean initbot = false;
+
     @Override
     public void onEnable() {
 
         log.info(ChatColor.translateAlternateColorCodes('&', PREFIJO_NOMBRE+" &aIniciado plugin"));
 
-        try {
-            this.bot = new Thread(new Bot(new Json(), log, this));
-            this.bot.start();
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
+        if(initbot){
+            try {
+                this.bot = new Thread(new Bot(new Json(), log, this));
+                this.bot.start();
+            } catch (IOException | ParseException e) {
+                e.printStackTrace();
+            }
+            log.info(ChatColor.translateAlternateColorCodes('&',
+                    String.format("%s &aBot del server activado", PREFIJO_NOMBRE)));
         }
+        else {
+            log.info(ChatColor.translateAlternateColorCodes('&',
+                    String.format("%s &eBot del server no activado", PREFIJO_NOMBRE)));
+        }
+
         if (!setupEconomy() ) {
             log.severe(ChatColor.translateAlternateColorCodes('&', PREFIJO_NOMBRE+" &cVault no encontrado, plugin no iniciado"));
             getServer().getPluginManager().disablePlugin(this);
