@@ -114,7 +114,9 @@ public class Main extends JavaPlugin {
 
         log.info(PREFIJO_NOMBRE+ChatColor.RED+" El plugin ha sido cerrado correctamente");
 
+
         this.bot.interrupt();
+        log.info(PREFIJO_NOMBRE+ChatColor.RED+" Bot apagado correctamente");
 
     }
 
