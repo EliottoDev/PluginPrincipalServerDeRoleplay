@@ -110,6 +110,11 @@ public class Main extends JavaPlugin {
 
         configs = new HashMap<>();
 
+        configs.put("Celdas", celdas);
+
+        if(!celdas.contains("number-of-cells"))
+            celdas.set("number-of-cells", 0);
+
         for (String jugador : config.getStringList("Jugadores"))
             configs.put(jugador, createConfig(jugador));
 

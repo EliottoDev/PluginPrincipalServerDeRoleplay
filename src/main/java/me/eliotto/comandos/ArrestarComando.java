@@ -1,18 +1,15 @@
 package me.eliotto.comandos;
 
 import me.eliotto.Main;
-import me.eliotto.eventos.policia.Arrestar;
 import me.eliotto.items.general.PrioridadAlta;
 import me.eliotto.items.general.PrioridadBaja;
 import me.eliotto.items.general.PrioridadMedia;
 import me.eliotto.items.general.Skip;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -20,6 +17,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitScheduler;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ArrestarComando implements CommandExecutor {
 
@@ -123,7 +127,7 @@ public class ArrestarComando implements CommandExecutor {
     }
 
     @EventHandler
-    public void onClick(InventoryClickEvent event){
+    public void onClick(InventoryClickEvent event) throws IOException, InterruptedException {
 
 
 
@@ -198,6 +202,20 @@ public class ArrestarComando implements CommandExecutor {
         
         if(event.getInventory() == this.tiempo){
 
+            HashMap<String, FileConfiguration> configs = plugin.getConfigs();
+            FileConfiguration celdas = configs.get("Celdas");
+
+
+            FileConfiguration config = configs.get(arrestado.getName());
+
+            if(celdas.getInt("number-of-cells") == 0){
+                event.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        String.format("&l&7[&2Dios&7] &f&lKamisama &e➣ &rNo hay celdas registradas. Usa /celda para añadir celdas")
+                        )
+                );
+                return;
+            }
+
             event.setCancelled(true);
 
             if(event.getCurrentItem().getClass() == Skip.class)
@@ -235,9 +253,39 @@ public class ArrestarComando implements CommandExecutor {
 
 
 
+            config.set(arrestado.getName()+".IsArrested", true);
 
+            int x = 0;
 
-            
+            Location loc = arrestado.getLocation();
+
+            for (int i = 1; i <= celdas.getInt("number-of-cells"); i++) {
+
+                if(!celdas.getBoolean(String.format("%d.IsOcuped", i))){
+
+                    arrestado.teleport(new Location(
+                            event.getWhoClicked().getWorld(),
+                            celdas.getInt(String.format("%d.X", i)),
+                            celdas.getInt(String.format("%d.Y", i)),
+                            celdas.getInt(String.format("%d.Z", i))
+                        )
+                    );
+
+                    x = i;
+                    break;
+                }
+            }
+
+            config.set(arrestado.getName()+".ArrestedData.Cell", x);
+            config.set(arrestado.getName()+".ArrestedData.Time",
+                        Integer.parseInt(results[1])
+                    );
+
+            config.save(String.format("%s.yml", arrestado.getName()));
+            arrestado.setGameMode(GameMode.ADVENTURE);
+            Thread.sleep((long) Integer.parseInt(results[1]) *1200*1000);
+            arrestado.teleport(loc);
+            arrestado.setGameMode(GameMode.SURVIVAL);
         }
     }
 }
