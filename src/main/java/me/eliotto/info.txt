@@ -1,8 +1,13 @@
 CustomDataModels:
 
-    - M4:       982453
-    - Taser:    528349
-    - Escopeta: 672385
+    - M4        :       982453
+    - Taser     :       528349
+    - Escopeta  :       672385
 
 
 URL: ""
+
+Codigos de colores de mensajes:
+    - Verde     : Mensaje
+    - Amarillo  : Comando ejecutado
+    - Rojo      : Comando fallido

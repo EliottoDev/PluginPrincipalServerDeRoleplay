@@ -24,21 +24,38 @@ import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Logger;
 
 public class Main extends JavaPlugin {
 
 
-    public String PREFIJO_NOMBRE = ChatColor.GRAY+"["+ChatColor.BLUE+getName()+ChatColor.GRAY+"]";
-    public FileConfiguration config;
-    private static final Logger log = Logger.getLogger("Minecraft");
-    private static Economy econ = null;
-
-    public FileConfiguration getRoles() {
-        return roles;
+    public String getPrefijoNombre() {
+        return PREFIJO_NOMBRE;
     }
 
-    private FileConfiguration roles;
+    @Override
+    public FileConfiguration getConfig() {
+        return config;
+    }
+
+    public HashMap<String, FileConfiguration> getConfigs() {
+        return configs;
+    }
+
+    private String PREFIJO_NOMBRE = ChatColor.GRAY+"["+ChatColor.BLUE+getName()+ChatColor.GRAY+"]";
+    private FileConfiguration config;
+    private static final Logger log = Logger.getLogger("Minecraft");
+    private static Economy econ = null;
+    private HashMap<String, FileConfiguration> configs;
+
+
+
+    public FileConfiguration getCeldas() {
+        return celdas;
+    }
+
+    private FileConfiguration celdas;
 
     private Thread bot;
 
@@ -66,7 +83,25 @@ public class Main extends JavaPlugin {
             log.info(ChatColor.translateAlternateColorCodes('&', PREFIJO_NOMBRE+" &aVault encontrado correctamente, plugin iniciado con exito!!"));
         }
 
-        this.roles = createConfig("roles.yml");
+        log.info(ChatColor.translateAlternateColorCodes(
+                '&',
+                    "&a _________  ________  _____ ______   ________  ________  ________  ________ _________   \n" +
+                            "|\\___   ___\\\\   ____\\|\\   _ \\  _   \\|\\   ____\\|\\   __  \\|\\   __  \\|\\  _____\\\\___   ___\\ \n" +
+                            "\\|___ \\  \\_\\ \\  \\___|\\ \\  \\\\\\__\\ \\  \\ \\  \\___|\\ \\  \\|\\  \\ \\  \\|\\  \\ \\  \\__/\\|___ \\  \\_| \n" +
+                            "     \\ \\  \\ \\ \\  \\  __\\ \\  \\\\|__| \\  \\ \\  \\    \\ \\   _  _\\ \\   __  \\ \\   __\\    \\ \\  \\  \n" +
+                            "      \\ \\  \\ \\ \\  \\|\\  \\ \\  \\    \\ \\  \\ \\  \\____\\ \\  \\\\  \\\\ \\  \\ \\  \\ \\  \\_|     \\ \\  \\ \n" +
+                            "       \\ \\__\\ \\ \\_______\\ \\__\\    \\ \\__\\ \\_______\\ \\__\\\\ _\\\\ \\__\\ \\__\\ \\__\\       \\ \\__\\\n" +
+                            "        \\|__|  \\|_______|\\|__|     \\|__|\\|_______|\\|__|\\|__|\\|__|\\|__|\\|__|        \\|__|\n" +
+                            "                                                                                         "
+        ));
+
+        this.celdas     = createConfig("celdas.yml");
+
+        configs = new HashMap<>();
+
+        for (String jugador : config.getStringList("Jugadores"))
+            configs.put(jugador, createConfig(jugador));
+
 
         registerEvents();
         registerCommands();
@@ -77,7 +112,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
 
-        Bukkit.getConsoleSender().sendMessage(PREFIJO_NOMBRE+ChatColor.RED+" El plugin ha sido cerrado correctamente");
+        log.info(PREFIJO_NOMBRE+ChatColor.RED+" El plugin ha sido cerrado correctamente");
 
         this.bot.interrupt();
 

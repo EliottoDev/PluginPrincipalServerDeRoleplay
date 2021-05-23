@@ -8,21 +8,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
+import java.util.HashMap;
+
 public class AsyncEvents implements Listener {
 
     private Main plugin;
-    private FileConfiguration roles;
-    public AsyncEvents(Main plugin) { this.plugin = plugin; this.roles = plugin.getRoles();}
+    private HashMap<String, FileConfiguration> configs;
+    public AsyncEvents(Main plugin) { this.plugin = plugin; this.configs = plugin.getConfigs();}
 
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event){
-        String prefix = roles.getString(event.getPlayer().getName());
+        String prefix = configs.get(event.getPlayer().getName()).getString(String.format("%s.Rol", event.getPlayer().getName()));
         event.setFormat(ChatColor.translateAlternateColorCodes('&',
-                String.format("[%s] %s ➣ %s",prefix ,event.getPlayer(), event.getMessage())));
-    }
-
-    @EventHandler
-    public void onPlayerPreLogin(AsyncPlayerPreLoginEvent event){
-
+                String.format("&7&l[&r&l%s&7] &r&l%s &r&a➣ &r%s",prefix ,event.getPlayer(), event.getMessage())));
     }
 }

@@ -29,7 +29,7 @@ public class Bot implements Runnable{
     public void run() {
 
         this.log.info(ChatColor.translateAlternateColorCodes('&',
-                plugin.PREFIJO_NOMBRE+" &aIniciando el bot de discord"));
+                plugin.getPrefijoNombre()+" &aIniciando el bot de discord"));
 
         DiscordApi api = new DiscordApiBuilder().setToken(TOKEN).login().join();
 

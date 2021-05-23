@@ -1,5 +1,7 @@
 package me.eliotto.comandos;
 
+import me.eliotto.Main;
+import me.eliotto.eventos.policia.Arrestar;
 import me.eliotto.items.general.PrioridadAlta;
 import me.eliotto.items.general.PrioridadBaja;
 import me.eliotto.items.general.PrioridadMedia;
@@ -11,11 +13,11 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -24,6 +26,13 @@ public class ArrestarComando implements CommandExecutor {
     public Inventory prioridades;
     public String[] results = new String[2];
     public Player arrestado;
+    public Inventory tiempo;
+    public Main plugin;
+
+    public ArrestarComando(Main plugin){
+        this.plugin = plugin;
+    }
+
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -120,15 +129,17 @@ public class ArrestarComando implements CommandExecutor {
 
         if(event.getInventory() == this.prioridades){
 
-            if(event.getCursor().getClass() == Skip.class)
+            if(event.getCurrentItem().getClass() == Skip.class)
                return;
 
-            if(event.getCursor().getClass() == PrioridadBaja.class)
+            if(event.getCurrentItem().getClass() == PrioridadBaja.class)
                 results[0] = "Baja";
-            if(event.getCursor().getClass() == PrioridadMedia.class)
+            if(event.getCurrentItem().getClass() == PrioridadMedia.class)
                 results[0] = "Media";
-            if(event.getCursor().getClass() == PrioridadAlta.class)
+            if(event.getCurrentItem().getClass() == PrioridadAlta.class)
                 results[0] = "Alta";
+
+            event.getWhoClicked().closeInventory();
 
             Inventory inventory = Bukkit.createInventory(
                     event.getWhoClicked(),
@@ -145,13 +156,31 @@ public class ArrestarComando implements CommandExecutor {
                 if(9 < i && i < 17){
 
                     ItemStack wooltime =
-                                    (i == 10) ? new ItemStack(Material.BLUE_WOOL) :
-                                    (i == 11) ? new ItemStack(Material.) :
-                                    (i == 12) ? new ItemStack(Material.PURPLE_WOOL) :
-                                    (i == 13) ? new ItemStack(Material.);
-                                    (i == 14) ? new ItemStack(Material.) :
-                                    (i == 15) ? new ItemStack(Material.) :
-                                    (i == 16) ? new ItemStack(Material.);
+                                    (x == 1) ? new ItemStack(Material.CYAN_WOOL)       :
+                                    (x == 2) ? new ItemStack(Material.LIGHT_BLUE_WOOL) :
+                                    (x == 3) ? new ItemStack(Material.LIME_WOOL)       :
+                                    (x == 4) ? new ItemStack(Material.GREEN_WOOL)      :
+                                    (x == 5) ? new ItemStack(Material.YELLOW_WOOL)     :
+                                    (x == 6) ? new ItemStack(Material.ORANGE_WOOL)     :
+                                    (x == 7) ? new ItemStack(Material.RED_WOOL)        : null;
+
+                    ItemMeta meta = wooltime.getItemMeta();
+
+                    meta.setDisplayName(ChatColor.translateAlternateColorCodes(
+                            '&',
+                            String.format("Arrestar durante %d dias", x)
+                    ));
+
+                    meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                    meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                    meta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+                    meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
+                    meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+                    meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+                    
+                    wooltime.setItemMeta(meta);
+                    
+                    inventory.setItem(i, wooltime);
 
                     x++;
                 }else{
@@ -160,10 +189,51 @@ public class ArrestarComando implements CommandExecutor {
             }
 
 
-
-            event.getWhoClicked().openInventory();
+            this.tiempo = inventory;
+            event.getWhoClicked().openInventory(inventory);
         }
+        
+        
+        if(event.getInventory() == this.tiempo){
+            
+            if(event.getCurrentItem().getClass() == Skip.class)
+                return;
+            
+            
+            ItemStack itemClicked = event.getCurrentItem();
+
+            /*
+            * Cyan          ->      1 dia       ->      20mins      ->
+            * Light blue    ->      2 dias      ->      40mins      ->
+            * Lime          ->      3 dias      ->      60mins      ->
+            * Green         ->      4 dias      ->      80mins      ->
+            * Yellow        ->      5 dias      ->      100mins     ->
+            * Orange        ->      6 dias      ->      120mins     ->
+            * Red           ->      7 dias      ->      140mins     ->
+            * */
+
+            if(itemClicked.getType() == Material.CYAN_WOOL)
+                this.results[1] = "1";
+            if(itemClicked.getType() == Material.LIGHT_BLUE_WOOL)
+                this.results[1] = "2";
+            if(itemClicked.getType() == Material.LIME_WOOL)
+                this.results[1] = "3";
+            if(itemClicked.getType() == Material.GREEN_WOOL)
+                this.results[1] = "4";
+            if(itemClicked.getType() == Material.YELLOW_WOOL)
+                this.results[1] = "5";
+            if(itemClicked.getType() == Material.ORANGE_WOOL)
+                this.results[1] = "6";
+            if(itemClicked.getType() == Material.RED_WOOL)
+                this.results[1] = "7";
+
+            event.getWhoClicked().closeInventory();
 
 
+
+
+
+            
+        }
     }
 }
