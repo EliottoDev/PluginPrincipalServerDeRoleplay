@@ -1,7 +1,7 @@
 package me.eliotto.comandos;
 
 import me.eliotto.Main;
-import me.eliotto.items.general.Dolares;
+import me.eliotto.items.general.DolaresGUI;
 import me.eliotto.items.general.Skip;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -59,7 +59,7 @@ public class Money implements CommandExecutor {
         for (int i = 0; i < 27; i++) {
             if(i == 10 || i == 16){
                 if(i == 10)
-                    inventory.setItem(i, new Dolares());
+                    inventory.setItem(i, new DolaresGUI(player));
 
                 if(i == 16){
 
