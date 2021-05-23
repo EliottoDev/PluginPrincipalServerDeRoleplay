@@ -94,6 +94,8 @@ public class Money implements CommandExecutor {
             }
         }
 
+
+        this.inv = inventory;
         player.openInventory(inventory);
 
         return true;
