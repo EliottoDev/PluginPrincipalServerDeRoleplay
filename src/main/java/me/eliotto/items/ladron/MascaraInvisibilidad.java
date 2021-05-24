@@ -12,9 +12,7 @@ public class MascaraInvisibilidad extends ItemStack {
     public MascaraInvisibilidad(Main plugin){
 
         super(Material.LEATHER_HELMET);
-
         this.plugin = plugin;
-
         LeatherArmorMeta meta = (LeatherArmorMeta) this.getItemMeta();
 
     }

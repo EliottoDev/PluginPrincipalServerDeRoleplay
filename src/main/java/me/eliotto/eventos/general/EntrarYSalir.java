@@ -43,7 +43,7 @@ public class EntrarYSalir implements Listener {
 
             pc.set(
                     String.format("%s.IP", player.getName()),
-                    player.getAddress().getAddress().getAddress().toString()
+                    player.getAddress().getAddress().getHostAddress()
             );
 
             pc.set(
@@ -67,16 +67,20 @@ public class EntrarYSalir implements Listener {
             );
 
             pc.set(
-                    String.format("%s.Rol"),
+                    String.format("%s.Rol", player.getName()),
                     "None"
             );
 
+            pc.set(
+                    String.format("%s.Discord", player.getName()),
+                    "None"
+            );
             List<String> byDefault = new ArrayList<>();
 
             byDefault.add("TGMCraft.play");
 
             pc.set(
-                    String.format("%s.Permisos"),
+                    String.format("%s.Permisos", player.getName()),
                     byDefault
             );
 
