@@ -34,36 +34,42 @@ public class MessageCreateEvent implements MessageCreateListener {
 
         if(cmd == "say"){
             if(args.length >= 1){
-//                if(){
-//                    String msg = "";
-//                    for(String arg : (String[]) ArrayUtils.remove(ArrayUtils.remove(args, 0), 1)){
-//                        if(ArrayUtils.indexOf(args, arg) == 1){
-//                            msg = arg;
-//                        }else{
-//                            msg += " "+arg;
-//                        }
-//                    }
-//                    plugin.getServer().getPlayer(args[0]).sendMessage(
-//                            ChatColor.translateAlternateColorCodes(
-//                                    '&',
-//                                    String.format("&7&l[&r&9Discord&7] &r&l%s &r&a➣ &r%s", user.getDisplayName(message.getServer().get()), msg)
-//                            )
-//                    );
-//                }else{
-//                    String msg = "";
-//                    for(String arg : args){
-//                        if(ArrayUtils.indexOf(args, arg) == 0){
-//                            msg = arg;
-//                        }else{
-//                            msg += " "+arg;
-//                        }
-//                    }
-//                    plugin.getServer().broadcastMessage(
-//                            ChatColor.translateAlternateColorCodes(
-//                                    '&',
-//                                    String.format("&7&l[&r&9Discord&7] &r&l%s &r&a➣ &r%s", user.getDisplayName(message.getServer().get()), msg)
-//                            )
-//                    );
+                if(args[0] == "player") {
+                    if (plugin.getConfigs().containsKey(plugin.getServer().getPlayer(args[1]).getName())) {
+                        if(plugin.getServer().getPlayer(args[1]).isOnline()){
+                            String msg = "";
+                            for (String arg : (String[]) ArrayUtils.remove(ArrayUtils.remove(args, 0), 1)) {
+                                if (ArrayUtils.indexOf(args, arg) == 1) {
+                                    msg = arg;
+                                } else {
+                                    msg += " " + arg;
+                                }
+                            }
+                            plugin.getServer().getPlayer(args[0]).sendMessage(
+                                    ChatColor.translateAlternateColorCodes(
+                                            '&',
+                                            String.format("&7&l[&r&9Discord&7] &r&l%s &r&a➣ &r%s", user.getDisplayName(message.getServer().get()), msg)
+                                    )
+                            );
+                        }else{
+
+                        }
+                    } else {
+                        String msg = "";
+                        for (String arg : args) {
+                            if (ArrayUtils.indexOf(args, arg) == 0) {
+                                msg = arg;
+                            } else {
+                                msg += " " + arg;
+                            }
+                        }
+                        plugin.getServer().broadcastMessage(
+                                ChatColor.translateAlternateColorCodes(
+                                        '&',
+                                        String.format("&7&l[&r&9Discord&7] &r&l%s &r&a➣ &r%s", user.getDisplayName(message.getServer().get()), msg)
+                                )
+                        );
+                    }
                 }
             }
         }

@@ -1,6 +1,7 @@
 package me.eliotto.eventos.general;
 
 import me.eliotto.Main;
+import me.eliotto.botds.Mensaje;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -8,11 +9,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class EntrarYSalir implements Listener {
 
@@ -84,9 +84,27 @@ public class EntrarYSalir implements Listener {
                     byDefault
             );
 
+            List<Mensaje> mensajesList = new ArrayList<Mensaje>();
+
+            pc.set(
+                    String.format("%s.Mensajes", player.getName()),
+                    mensajesList
+            );
+
             pc.save(String.format("%s.yml", player.getName()));
             config.set("Jugadores", config.getStringList("Jugadores").add(player.getName()));
         }
+
+        player.sendMessage(
+                ChatColor.translateAlternateColorCodes(
+                        '&',
+                    String.format("&l&7[&2Dios&7] &f&lKamisama &a➣ &rTienes "+
+                            config.getList(String.format("%s.Mensajes", player.getName())).stream().count()+
+                            " mensajes"
+                    )
+                )
+        );
+
         player.setTexturePack("");
         event.setJoinMessage(ChatColor.GOLD+"["+ChatColor.GREEN+"+"+ChatColor.GOLD+"] "+player.getCustomName()+" se ha unido a la partida!!");
 
