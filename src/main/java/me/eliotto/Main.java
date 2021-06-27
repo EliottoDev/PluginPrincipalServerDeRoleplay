@@ -11,6 +11,7 @@ import me.eliotto.items.general.IronTemplado;
 import me.eliotto.items.militar.M4;
 import me.eliotto.items.policia.Esposas;
 import me.eliotto.items.policia.Taser;
+import me.eliotto.paginaweb.Index;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -58,6 +59,7 @@ public class Main extends JavaPlugin {
     private FileConfiguration celdas;
 
     private Thread bot;
+    private Thread page;
 
     {
         config = getConfig();
@@ -65,6 +67,7 @@ public class Main extends JavaPlugin {
 
 
     boolean initbot = false;
+    boolean initpage = false;
 
     @Override
     public void onEnable() {
@@ -92,6 +95,19 @@ public class Main extends JavaPlugin {
             return;
         }else{
             log.info(ChatColor.translateAlternateColorCodes('&', PREFIJO_NOMBRE+" &aVault encontrado correctamente, plugin iniciado con exito!!"));
+        }
+
+        if(initpage){
+            this.page = new Thread(new Index());
+            this.page.run();
+
+        }else{
+
+            log.info(ChatColor.translateAlternateColorCodes(
+                    '&',
+                    PREFIJO_NOMBRE+"&e Pagina web no activada"
+            ));
+
         }
 
         log.info(ChatColor.translateAlternateColorCodes(
@@ -134,6 +150,8 @@ public class Main extends JavaPlugin {
         this.bot.interrupt();
         log.info(PREFIJO_NOMBRE+ChatColor.RED+" Bot apagado correctamente");
 
+        this.page.interrupt();
+        log.info(PREFIJO_NOMBRE+ChatColor.RED+" Pagina web cerrada correctamente");
     }
 
     public void registerRecipes(){

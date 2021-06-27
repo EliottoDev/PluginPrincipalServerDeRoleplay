@@ -33,7 +33,7 @@ public class Bot implements Runnable{
 
         DiscordApi api = new DiscordApiBuilder().setToken(TOKEN).login().join();
 
-        api.addMessageCreateListener(new MessageCreateEvent(json));
+        api.addMessageCreateListener(new MessageCreateEvent(json, plugin));
 
     }
 }
