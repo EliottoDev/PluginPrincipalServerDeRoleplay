@@ -2,6 +2,7 @@ package me.eliotto.botds;
 
 import org.javacord.api.entity.user.User;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Mensaje {
@@ -18,13 +19,13 @@ public class Mensaje {
         return content;
     }
 
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    private Date fecha;
+    private LocalDateTime fecha;
 
-    public Mensaje(String content, User autor, Date fecha){
+    public Mensaje(String content, User autor, LocalDateTime fecha){
         this.content = content;
         this.autor = autor;
         this.fecha = fecha;

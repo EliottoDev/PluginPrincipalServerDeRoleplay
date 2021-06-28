@@ -68,6 +68,7 @@ public class Main extends JavaPlugin {
 
     boolean initbot = false;
     boolean initpage = false;
+    boolean initwebsocket = true;
 
     @Override
     public void onEnable() {
@@ -107,6 +108,10 @@ public class Main extends JavaPlugin {
                     '&',
                     PREFIJO_NOMBRE+"&e Pagina web no activada"
             ));
+
+        }
+
+        if( initwebsocket ){
 
         }
 
